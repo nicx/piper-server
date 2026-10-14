@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Not sandboxed: the app spawns a Python (wyoming-piper) child process,
+         creates a virtualenv and downloads voice models into ~/Library/Piper. -->
+
+    <!-- Required so the hardened runtime allows the bundled CPython interpreter
+         to run and load the third-party C-extension libraries that pip installs
+         into the virtualenv (onnxruntime, numpy, piper's espeak-ng phonemizer).
+         Without disable-library-validation those unsigned .so files are blocked. -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+</dict>
+</plist>
