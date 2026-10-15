@@ -43,9 +43,16 @@ final class LogStore: ObservableObject {
     }
 
     func appendSystem(_ message: String) {
-        let stamp = Date().formatted(.iso8601.year().month().day().time(includingFractionalSeconds: false).dateTimeSeparator(.space))
-        append("[Piper \(stamp)] \(message)\n")
+        append("[Piper \(LogStore.stampFormatter.string(from: Date()))] \(message)\n")
     }
+
+    /// Local time (ISO-8601 formatting would print UTC).
+    private static let stampFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "en_US_POSIX")
+        f.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return f
+    }()
 
     func clear() {
         lines.removeAll()
